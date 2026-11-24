@@ -401,6 +401,39 @@ button {
 .hero-3d.is-ready canvas {
   opacity: 1;
 }
+/* Imagem da cena para celular e tablet (e para quem fica sem 3D). Some no computador com 3D. */
+.hero-art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  animation:
+    art-in 0.6s var(--ease) both,
+    art-float 7s ease-in-out 0.6s infinite;
+}
+@keyframes art-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+@keyframes art-float {
+  50% {
+    transform: translateY(-8px);
+  }
+}
+@media (min-width: 1041px) {
+  .hero-art {
+    left: 50%;
+    width: 50%;
+  }
+}
+@media (min-width: 1041px) and (hover: hover) and (pointer: fine) {
+  .hero-3d:not(.no-3d) .hero-art {
+    display: none;
+  }
+}
 .hero-grid {
   position: relative;
   z-index: 2;
@@ -1867,6 +1900,8 @@ h3 {
 }
 .maker {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  min-width: 0;
   overflow: hidden;
   border-radius: 18px;
   border: 1px solid var(--line);
@@ -1902,7 +1937,7 @@ h3 {
 }
 .maker-facts {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   margin: 10px 0 6px;
   padding: 16px 0;
   border-block: 1px solid var(--line);
@@ -2329,6 +2364,56 @@ h3 {
     display: none;
   }
 }
+@media (max-width: 360px) {
+  .wrap {
+    width: calc(100% - 24px);
+  }
+  .nav-inner {
+    gap: 6px;
+  }
+  .brand {
+    font-size: 16px;
+    gap: 6px;
+  }
+  .brand img {
+    width: 24px;
+    height: 27px;
+  }
+  .nav-actions {
+    gap: 6px;
+  }
+  .icon-btn {
+    width: 36px;
+    height: 36px;
+  }
+  .nav-actions .btn-sm {
+    padding: 0 9px;
+    min-height: 36px;
+    font-size: 12px;
+  }
+  .brand {
+    font-size: 15px;
+  }
+  .brand img {
+    width: 22px;
+    height: 25px;
+  }
+  .maker-facts li {
+    padding: 0 8px;
+  }
+  .maker-facts strong {
+    font-size: 16px;
+  }
+  .maker-facts span {
+    font-size: 11.5px;
+  }
+  .maker-body {
+    padding: 20px 18px 22px;
+  }
+  h1 {
+    font-size: 36px;
+  }
+}
 @media (max-width: 480px) {
   .lbl-long {
     display: none;
@@ -2385,5 +2470,49 @@ h3 {
   .field-row {
     grid-template-columns: 1fr;
     gap: 0;
+  }
+}
+
+/* ===== Celular e tablet: menos efeitos que pesam na GPU ===== */
+/* Desfoque grande, sombra animada e vidro fosco forçam o aparelho a redesenhar a tela inteira a cada
+   quadro. Em tela pequena ou sem mouse, ficam só as versões estáticas. */
+@keyframes fade-up-lite {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+@media (max-width: 1040px), (hover: none) {
+  .fade-up {
+    animation-name: fade-up-lite;
+  }
+  .orb {
+    filter: none;
+    animation: none;
+    opacity: 0.32;
+  }
+  .btn-glow {
+    animation: none;
+  }
+  .pill i,
+  .pill,
+  .btn-ghost,
+  .nav.scrolled,
+  .film-end {
+    animation: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+  .nav.scrolled {
+    background: var(--bg);
+  }
+  .btn-ghost {
+    background: var(--surface);
+  }
+  .film-end {
+    background: var(--bg);
+  }
+  .grid-lines {
+    display: none;
   }
 }

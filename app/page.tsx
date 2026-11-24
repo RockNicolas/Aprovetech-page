@@ -400,10 +400,15 @@ export default function Page() {
                   <Reveal as="li" className="maker" key={m.name} delay={i * 0.1}>
                     <div className="maker-logo" style={{ background: m.bg }}>
                       {/* Recorta só a logo de dentro da imagem, sem o fundo em volta. */}
-                      <span className="crop" style={{ height: m.height, aspectRatio: `${cw} / ${ch}` }}>
+                      <span
+                        className="crop"
+                        style={{ width: Math.round((m.height * cw) / ch), maxWidth: '100%', aspectRatio: `${cw} / ${ch}` }}
+                      >
                         <img
                           src={m.src}
                           alt={m.name}
+                          loading="lazy"
+                          decoding="async"
                           style={{
                             width: `${(m.width / cw) * 100}%`,
                             marginLeft: `${(-x / cw) * 100}%`,

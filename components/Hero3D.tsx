@@ -247,7 +247,7 @@ function Rig({
   );
 }
 
-export default function Hero3D({ enabled, active, onReady }: { enabled: boolean; active: boolean; onReady: () => void }) {
+export default function Hero3D({ active, onReady }: { active: boolean; onReady: () => void }) {
   const pointer = useRef({ x: 0, y: 0 });
   const scroll = useRef(0);
 
@@ -266,8 +266,6 @@ export default function Hero3D({ enabled, active, onReady }: { enabled: boolean;
       window.removeEventListener('scroll', onScroll);
     };
   }, []);
-
-  if (!enabled) return null;
 
   return (
     <Canvas

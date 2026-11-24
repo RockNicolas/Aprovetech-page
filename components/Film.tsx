@@ -208,14 +208,20 @@ export function Film() {
     if (!playing || !visible) return;
     let raf = 0;
     last.current = performance.now();
+    // Atualiza no máximo ~24 vezes por segundo: cada atualização refaz a cena inteira, e mais que
+    // isso só pesa no celular sem melhorar o que se vê.
+    let acc = 0;
     const tick = (now: number) => {
-      const dt = (now - last.current) / 1000;
+      raf = requestAnimationFrame(tick);
+      acc += now - last.current;
       last.current = now;
+      if (acc < 40) return;
+      const dt = acc / 1000;
+      acc = 0;
       setT((prev) => {
         const next = prev + dt;
         return next >= D ? 0 : next;
       });
-      raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
