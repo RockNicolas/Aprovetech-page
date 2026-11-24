@@ -8,13 +8,142 @@ import { PhoneDemo } from '../components/PhoneDemo';
 import { Reveal, SplitWordsCss, Title } from '../components/Reveal';
 import { Story } from '../components/Story';
 import { ThingIcon } from '../components/ThingIcon';
-import { CONTACT_HREF, documentTypes, faq, heroPoints, makers, navLinks, safety } from './content';
+import { CONTACT_HREF, documentTypes, faq, heroPoints, instagramUrl, makers, navLinks, safety } from './content';
 
 const Arrow = ({ size = 18 }: { size?: number }) => (
   <svg className="arr" viewBox="0 0 24 24" width={size} height={size} fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
     <path d="M5 12h14M13 6l6 6-6 6" />
   </svg>
 );
+
+const Instagram = ({ size = 18 }: { size?: number }) => (
+  <svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <rect x="3" y="3" width="18" height="18" rx="5" />
+    <circle cx="12" cy="12" r="4" />
+    <path d="M17.5 6.5h.01" />
+  </svg>
+);
+
+const Globe = ({ size = 18 }: { size?: number }) => (
+  <svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <circle cx="12" cy="12" r="9" />
+    <path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18" />
+  </svg>
+);
+
+// Recursos do aplicativo. Cada cartão tem uma ilustração no topo, todas da mesma altura, para os
+// títulos ficarem na mesma linha.
+const FEATURES = [
+  {
+    key: 'lista',
+    title: 'Tudo o que importa já na lista',
+    text: 'Tipo, número, fornecedor, valor, obra, prioridade e prazo. Filtre por obra, tipo ou prioridade e pesquise por documento ou fornecedor.',
+  },
+  {
+    key: 'lote',
+    title: 'Aprovação em lote',
+    text: 'Selecione até 50 documentos, revise a prévia e envie. Cada um segue separado para a fila de envio.',
+  },
+  {
+    key: 'alcadas',
+    title: 'Alçadas respeitadas',
+    text: 'Cada pessoa decide só o que cabe ao seu nível e às suas obras, como já acontece na empresa.',
+  },
+  {
+    key: 'avisos',
+    title: 'Avisos no celular',
+    text: 'Notificação quando algo espera a sua decisão, abrindo direto no documento. No iPhone, é preciso adicionar o app à Tela de Início.',
+  },
+  {
+    key: 'sinal',
+    title: 'Funciona sem sinal',
+    text: 'Sem conexão no canteiro, a decisão fica guardada no aparelho e só sai da fila quando o servidor confirma o recebimento.',
+  },
+  {
+    key: 'painel',
+    title: 'Painel de administração',
+    text: 'Empresas, usuários, perfis e limites, acompanhamento da integração com o ERP e relatórios. O acesso pede verificação em duas etapas.',
+  },
+] as const;
+
+function FeatureFigure({ name }: { name: (typeof FEATURES)[number]['key'] }) {
+  switch (name) {
+    case 'lista':
+      return (
+        <div className="chips">
+          <span className="chip chip-urgent">Prioridade alta</span>
+          <span className="chip">Residencial Aurora</span>
+          <span className="chip">Pedido</span>
+          <span className="chip">Medição</span>
+          <span className="chip">Contrato</span>
+        </div>
+      );
+    case 'lote':
+      return (
+        <ul className="batch">
+          {[0, 1, 2, 3].map((i) => (
+            <li key={i} style={{ ['--i' as string]: i }}>
+              <span />
+              <i />
+            </li>
+          ))}
+        </ul>
+      );
+    case 'alcadas':
+      return (
+        <ol className="levels">
+          {['1ª alçada', '2ª alçada', '3ª alçada'].map((l, i) => (
+            <li key={l} style={{ ['--i' as string]: i }}>
+              {l}
+            </li>
+          ))}
+        </ol>
+      );
+    case 'avisos':
+      return (
+        <div className="notif">
+          <img src="/logo.svg" alt="" width={22} height={25} />
+          <div>
+            <b>Pedido 4821 aguarda sua decisão</b>
+            <small>R$ 38.420,00 · agora</small>
+          </div>
+        </div>
+      );
+    case 'sinal':
+      return (
+        <div className="queue">
+          <small>Sem conexão · 2 decisões guardadas</small>
+          <ul>
+            <li>
+              <span>Pedido 4821</span>
+              <em>Aguardando envio</em>
+            </li>
+            <li>
+              <span>Medição 112</span>
+              <em>Aguardando envio</em>
+            </li>
+          </ul>
+        </div>
+      );
+    case 'painel':
+      return (
+        <ul className="mini-stats">
+          <li>
+            <strong>5</strong>
+            <span>tipos de documento</span>
+          </li>
+          <li>
+            <strong>50</strong>
+            <span>por lote</span>
+          </li>
+          <li>
+            <strong>2FA</strong>
+            <span>no painel</span>
+          </li>
+        </ul>
+      );
+  }
+}
 
 export default function Page() {
   return (
@@ -49,7 +178,7 @@ export default function Page() {
               </p>
               <div className="hero-cta fade-up" style={{ animationDelay: '0.85s' }}>
                 <Magnetic>
-                  <a className="btn btn-glow" href={CONTACT_HREF}>
+                  <a className="btn btn-glow" href={CONTACT_HREF} data-demo>
                     Pedir demonstração
                     <Arrow />
                   </a>
@@ -175,122 +304,26 @@ export default function Page() {
               <h2>
                 <Title text="O que vem no aplicativo." />
               </h2>
-              <Reveal delay={0.2}>
-                <p className="section-sub">
-                  Lista de pendências, aprovação em lote, alçadas, avisos, uso sem sinal e um painel
-                  para a administração.
-                </p>
-              </Reveal>
             </div>
 
-            <div className="bento">
-              <Reveal kind="rule" className="card b-wide">
-                <div className="b-text">
-                  <ThingIcon name="pedido" />
-                  <h3>Tudo o que importa já na lista</h3>
-                  <p>
-                    Tipo, número, fornecedor, valor, obra, prioridade e prazo. Filtre por obra, tipo
-                    ou prioridade e pesquise por documento ou fornecedor.
-                  </p>
-                </div>
-                <div className="chips" aria-hidden="true">
-                  <span className="chip chip-urgent">Prioridade alta</span>
-                  <span className="chip">Residencial Aurora</span>
-                  <span className="chip">Pedido</span>
-                  <span className="chip">Medição</span>
-                  <span className="chip">Parque das Oliveiras</span>
-                  <span className="chip">Contrato</span>
-                </div>
-              </Reveal>
-
-              <Reveal kind="rule" className="card" delay={0.08}>
-                <ThingIcon name="lote" />
-                <h3>Aprovação em lote</h3>
-                <p>
-                  Selecione até 50 documentos, revise a prévia e envie. Cada um segue separado para
-                  a fila de envio.
-                </p>
-                <ul className="batch" aria-hidden="true">
-                  {[0, 1, 2, 3].map((i) => (
-                    <li key={i} style={{ ['--i' as string]: i }}>
-                      <span />
-                      <i />
-                    </li>
-                  ))}
-                </ul>
-              </Reveal>
-
-              <Reveal kind="rule" className="card" delay={0.16}>
-                <ThingIcon name="escudo" />
-                <h3>Alçadas respeitadas</h3>
-                <p>
-                  Cada pessoa decide só o que cabe ao seu nível e às suas obras, como já acontece na
-                  empresa.
-                </p>
-                <ol className="levels" aria-hidden="true">
-                  <li style={{ ['--i' as string]: 0 }}>1ª</li>
-                  <li style={{ ['--i' as string]: 1 }}>2ª</li>
-                  <li style={{ ['--i' as string]: 2 }}>3ª</li>
-                </ol>
-              </Reveal>
-
-              <Reveal kind="rule" className="card" delay={0.08}>
-                <ThingIcon name="sino" />
-                <h3>Avisos no celular</h3>
-                <p>
-                  Notificação quando algo espera a sua decisão, abrindo direto no documento. No
-                  iPhone, é preciso adicionar o app à Tela de Início.
-                </p>
-              </Reveal>
-
-              <Reveal kind="rule" className="card" delay={0.16}>
-                <ThingIcon name="sinal" />
-                <h3>Funciona sem sinal</h3>
-                <p>
-                  Sem conexão no canteiro, a decisão fica guardada no aparelho e só sai da fila
-                  quando o servidor confirma o recebimento.
-                </p>
-                <div className="sync" aria-hidden="true">
-                  <span className="dot" />
-                  <span className="bar">
-                    <i />
-                  </span>
-                  <span className="dot end" />
-                </div>
-              </Reveal>
-
-              <Reveal kind="rule" className="card b-wide" delay={0.1}>
-                <div className="b-text">
-                  <ThingIcon name="cadeado" />
-                  <h3>Painel de administração</h3>
-                  <p>
-                    Cadastro de empresas e usuários, perfis e limites, acompanhamento da integração
-                    com o ERP e relatórios. O acesso ao painel pede verificação em duas etapas.
-                  </p>
-                </div>
-                <ul className="mini-stats">
-                  <li>
-                    <strong>5</strong>
-                    <span>tipos de documento</span>
-                  </li>
-                  <li>
-                    <strong>50</strong>
-                    <span>documentos por lote</span>
-                  </li>
-                  <li>
-                    <strong>2FA</strong>
-                    <span>no painel</span>
-                  </li>
-                </ul>
-              </Reveal>
-            </div>
+            <ul className="features">
+              {FEATURES.map((f, i) => (
+                <Reveal as="li" className="card" key={f.key} delay={(i % 3) * 0.08}>
+                  <div className="card-fig" aria-hidden="true">
+                    <FeatureFigure name={f.key} />
+                  </div>
+                  <h3>{f.title}</h3>
+                  <p>{f.text}</p>
+                </Reveal>
+              ))}
+            </ul>
           </div>
         </section>
 
         {/* SEGURANÇA */}
         <section className="section security" id="seguranca">
-          <div className="wrap sec-grid">
-            <div className="sec-head">
+          <div className="wrap split">
+            <div className="split-head">
               <Reveal>
                 <p className="eyebrow">Segurança</p>
               </Reveal>
@@ -320,14 +353,23 @@ export default function Page() {
 
         {/* FAQ */}
         <section className="section" id="faq">
-          <div className="wrap faq-wrap">
-            <div className="section-head">
+          <div className="wrap split">
+            <div className="split-head">
               <Reveal>
                 <p className="eyebrow">Dúvidas</p>
               </Reveal>
               <h2>
                 <Title text="Perguntas frequentes" />
               </h2>
+              <Reveal delay={0.15}>
+                <p className="section-sub">
+                  Não achou a sua?{' '}
+                  <a className="text-link" href={CONTACT_HREF}>
+                    Escreva para a gente
+                  </a>
+                  .
+                </p>
+              </Reveal>
             </div>
             <Reveal>
               <Faq items={faq} />
@@ -343,11 +385,11 @@ export default function Page() {
                 <p className="eyebrow">Quem faz</p>
               </Reveal>
               <h2>
-                <Title text="Responsáveis pelo AproveTech" accentFrom={2} />
+                <Title text="Quem está por trás do AproveTech" accentFrom={3} />
               </h2>
               <Reveal delay={0.15}>
                 <p className="section-sub">
-                  O AproveTech é um produto da Rock Software Solutions e da NID Tecnologia.
+                  O AproveTech é um produto da Rock Software Solutions e da NID Consultoria.
                 </p>
               </Reveal>
             </div>
@@ -355,10 +397,10 @@ export default function Page() {
               {makers.map((m, i) => {
                 const [x, y, cw, ch] = m.crop;
                 return (
-                  <Reveal as="li" kind="rule" key={m.name} delay={i * 0.1}>
+                  <Reveal as="li" className="maker" key={m.name} delay={i * 0.1}>
                     <div className="maker-logo" style={{ background: m.bg }}>
                       {/* Recorta só a logo de dentro da imagem, sem o fundo em volta. */}
-                      <span className="crop" style={{ aspectRatio: `${cw} / ${ch}` }}>
+                      <span className="crop" style={{ height: m.height, aspectRatio: `${cw} / ${ch}` }}>
                         <img
                           src={m.src}
                           alt={m.name}
@@ -370,7 +412,39 @@ export default function Page() {
                         />
                       </span>
                     </div>
-                    <strong>{m.name}</strong>
+                    <div className="maker-body">
+                      <h3>{m.name}</h3>
+                      <p className="maker-text">{m.text}</p>
+                      <ul className="maker-facts">
+                        {m.facts.map(([big, label]) => (
+                          <li key={big}>
+                            <strong>{big}</strong>
+                            <span>{label}</span>
+                          </li>
+                        ))}
+                      </ul>
+                      <div className="maker-links">
+                        <a
+                          className="maker-link"
+                          href={m.site}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={`Site da ${m.name} (abre em nova aba)`}
+                        >
+                          <Globe />
+                          Site
+                        </a>
+                        <a
+                          className="maker-link"
+                          href={instagramUrl(m.instagram)}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={`Instagram da ${m.name}: @${m.instagram} (abre em nova aba)`}
+                        >
+                          <Instagram />@{m.instagram}
+                        </a>
+                      </div>
+                    </div>
                   </Reveal>
                 );
               })}
@@ -392,7 +466,7 @@ export default function Page() {
               </p>
             </Reveal>
             <Reveal delay={0.4}>
-              <a className="btn btn-lg" href={CONTACT_HREF}>
+              <a className="btn btn-lg" href={CONTACT_HREF} data-demo>
                 Pedir demonstração
                 <Arrow size={20} />
               </a>
@@ -410,9 +484,18 @@ export default function Page() {
               Aprove<span className="brand-light">Tech</span>
             </span>
           </a>
+          <ul className="footer-social" aria-label="Instagram das empresas responsáveis">
+            {makers.map((m) => (
+              <li key={m.instagram}>
+                <a href={instagramUrl(m.instagram)} target="_blank" rel="noopener noreferrer">
+                  <Instagram size={16} />@{m.instagram}
+                </a>
+              </li>
+            ))}
+          </ul>
           <p>
             © {new Date().getFullYear()} AproveTech, um produto da Rock Software Solutions e da NID
-            Tecnologia. O AproveTech se integra a sistemas ERP por API. Marcas de terceiros
+            Consultoria. O AproveTech se integra a sistemas ERP por API. Marcas de terceiros
             pertencem aos seus respectivos titulares.
           </p>
         </div>

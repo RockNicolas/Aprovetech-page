@@ -128,12 +128,14 @@ function useDocTexture(d: DocData) {
     g.fillStyle = '#ffffff';
     g.font = '800 80px Inter, Segoe UI, sans-serif';
     g.fillText(d.value, 52, 372);
+    // A pílula acompanha a largura do texto (30 px de folga de cada lado), para nenhum selo vazar.
+    g.font = '800 30px Inter, Segoe UI, sans-serif';
+    const badgeW = Math.ceil(g.measureText(d.badge).width) + 60;
     g.fillStyle = d.tone;
     g.beginPath();
-    g.roundRect(52, 412, 250, 60, 30);
+    g.roundRect(52, 412, badgeW, 60, 30);
     g.fill();
     g.fillStyle = '#1e1e22';
-    g.font = '800 30px Inter, Segoe UI, sans-serif';
     g.fillText(d.badge, 82, 454);
     const t = new THREE.CanvasTexture(c);
     t.colorSpace = THREE.SRGBColorSpace;

@@ -1,8 +1,16 @@
 // E-mail que recebe os pedidos de demonstração. Defina NEXT_PUBLIC_CONTACT_EMAIL para trocar.
-export const CONTACT_EMAIL = process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'contato@aprovetech.com.br';
+export const CONTACT_EMAIL = process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'rocksoftwaresolutions.dev@gmail.com';
 export const CONTACT_HREF = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(
   'Quero uma demonstração do AproveTech',
 )}`;
+
+// Endereço público do site, sem barra no fim. Usado no sitemap, nos links canônicos e nas prévias de
+// compartilhamento. Defina NEXT_PUBLIC_SITE_URL com o domínio real ao publicar.
+export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3002').replace(/\/+$/, '');
+
+export const SITE_TITLE = 'AproveTech · Aprovações do seu ERP no celular';
+export const SITE_DESCRIPTION =
+  'Aprove pedidos, solicitações, cotações, contratos e medições do seu sistema ERP pelo celular, com confirmação segura, alçadas respeitadas e histórico de cada decisão.';
 
 export const navLinks = [
   { href: '#como-funciona', label: 'Como funciona' },
@@ -79,25 +87,48 @@ export const faq = [
   },
 ];
 
-// Empresas responsáveis pelo AproveTech. crop = x, y, largura e altura (em pixels da imagem
-// original) do trecho onde está a logo; o resto da imagem fica de fora. bg é a cor de fundo da
-// própria imagem, usada no cartão para a logo não aparecer dentro de um retângulo.
+// Empresas responsáveis pelo AproveTech.
+// - crop: x, y, largura e altura (em pixels da imagem original) do trecho onde está a logo; o resto
+//   da imagem fica de fora.
+// - height: altura da logo na tela, em pixels. Cada logo tem um peso visual, então a altura é
+//   ajustada à mão para as duas parecerem do mesmo tamanho.
+// - bg: cor de fundo da própria imagem, usada no cartão para a logo não ficar dentro de um retângulo.
 export const makers = [
   {
     name: 'Rock Software Solutions',
     src: '/responsaveis/rock-software-solutions.png',
     width: 880,
     crop: [174, 154, 541, 131],
+    height: 56,
     bg: '#f7f9fb',
+    instagram: 'rocksoftware.dev',
+    site: 'https://rock-software-solutions.vercel.app/',
+    text: 'Software house que cria sistemas, sites e aplicativos sob medida, sempre do zero, a partir dos processos de cada empresa. Acompanha o projeto do planejamento ao suporte.',
+    facts: [
+      ['4 anos', 'desenvolvendo software'],
+      ['Do zero', 'sem templates prontos'],
+      ['3 etapas', 'planejamento, código e suporte'],
+    ],
   },
   {
-    name: 'NID Tecnologia',
-    src: '/responsaveis/nid-tecnologia.jpg',
+    name: 'NID Consultoria',
+    src: '/responsaveis/nid-logo.jpg',
     width: 750,
     crop: [43, 171, 675, 196],
+    height: 70,
     bg: '#ffffff',
+    instagram: 'nidconsultoria',
+    site: 'https://www.nidconsultoria.com.br/',
+    text: 'Administra a NID Tecnologia e faz consultoria em processos para a construção civil, com implantação e treinamento de sistema ERP e acompanhamento das equipes.',
+    facts: [
+      ['Desde 2016', 'em atividade'],
+      ['15+ anos', 'da equipe na construção civil'],
+      ['Power BI', 'indicadores e dashboards'],
+    ],
   },
 ] as const;
+
+export const instagramUrl = (handle: string) => `https://www.instagram.com/${handle}/`;
 
 export type DemoDoc = {
   id: number;

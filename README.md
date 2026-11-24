@@ -3,7 +3,7 @@
 Site público do AproveTech em Next.js 16, React 19 e TypeScript. O topo tem uma cena 3D (Three.js /
 React Three Fiber); o resto da página usa animações leves feitas em CSS.
 
-O AproveTech é um produto da **Rock Software Solutions** e da **NID Tecnologia**.
+O AproveTech é um produto da **Rock Software Solutions** e da **NID Consultoria** (que administra a NID Tecnologia).
 
 ```sh
 npm install
@@ -28,6 +28,24 @@ npm run build
 `components/InView.tsx` usa um único IntersectionObserver para a página toda, acrescentando a
 classe `.is-in` quando o bloco aparece. O movimento fica todo em `app/styles.css`, na seção
 "Entradas". Sem JavaScript, ou com "reduzir movimento" ativado no sistema, tudo aparece parado.
+
+## Publicar e aparecer no Google
+
+O site é estático (`npm run build` gera tudo pré-renderizado), então roda em qualquer hospedagem de
+Next.js. A mais simples é a Vercel: importe o repositório do GitHub e confirme.
+
+1. Em **Environment Variables** da hospedagem, defina `NEXT_PUBLIC_SITE_URL` com o endereço final
+   (por exemplo `https://aprovetech.com.br`, sem barra no fim). Ele vai para o sitemap, o link
+   canônico e as prévias de compartilhamento. Sem isso, saem endereços de `localhost`.
+2. Abra o [Google Search Console](https://search.google.com/search-console), adicione o site,
+   escolha verificação por **tag HTML** e copie só o valor de `content` para
+   `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION`. Publique de novo e clique em verificar.
+3. No Search Console, em **Sitemaps**, envie `sitemap.xml`. O Google leva alguns dias para listar.
+
+Já vem configurado: `robots.txt`, `sitemap.xml`, `manifest.webmanifest`, link canônico, título e
+descrição, dados estruturados (schema.org), prévia ao compartilhar (`app/opengraph-image.tsx`),
+`favicon.ico`, `favicon.svg` e ícone para iPhone. Funciona nos navegadores atuais (Chrome, Edge,
+Firefox e Safari de 2023 em diante); a cena 3D do topo some sozinha se o aparelho não suportar WebGL.
 
 ## Ajustes
 

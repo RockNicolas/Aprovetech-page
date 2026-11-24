@@ -30,7 +30,7 @@ export function Nav({ links, contactHref }: { links: { href: string; label: stri
         <div className="nav-actions">
           <ThemeToggle />
           <Magnetic strength={0.2}>
-            <a className="btn btn-sm" href={contactHref}>
+            <a className="btn btn-sm" href={contactHref} data-demo>
               <span className="lbl-long">Pedir demonstração</span>
               <span className="lbl-short">Demonstração</span>
             </a>
