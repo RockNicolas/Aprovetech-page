@@ -195,14 +195,25 @@ const DOCS: DocData[] = [
   { title: 'Contrato · 309', supplier: 'Elétrica Horizonte', value: 'R$ 84.500', badge: 'APROVADO', tone: '#7edbb6' },
 ];
 
-function Rig({ pointer, scroll }: { pointer: React.RefObject<{ x: number; y: number }>; scroll: React.RefObject<number> }) {
+function Rig({
+  pointer,
+  scroll,
+  onReady,
+}: {
+  pointer: React.RefObject<{ x: number; y: number }>;
+  scroll: React.RefObject<number>;
+  onReady: () => void;
+}) {
   const group = useRef<THREE.Group>(null);
+  const frames = useRef(0);
   const { viewport, size } = useThree();
   // Só no desktop a tela cobre o hero inteiro; no celular e tablet ela vira um bloco baixo.
   const wide = size.width > 1000 && size.height > 480;
   useFrame((state, dt) => {
     const g = group.current;
     if (!g) return;
+    // Os primeiros quadros compilam os shaders e podem engasgar; só avisa que está pronto depois deles.
+    if (frames.current < 3 && ++frames.current === 3) onReady();
     const px = pointer.current?.x ?? 0;
     const py = pointer.current?.y ?? 0;
     const s = scroll.current ?? 0;
@@ -236,7 +247,7 @@ function Rig({ pointer, scroll }: { pointer: React.RefObject<{ x: number; y: num
   );
 }
 
-export default function Hero3D({ active }: { active: boolean }) {
+export default function Hero3D({ active, onReady }: { active: boolean; onReady: () => void }) {
   const pointer = useRef({ x: 0, y: 0 });
   const scroll = useRef(0);
 
@@ -273,7 +284,7 @@ export default function Hero3D({ active }: { active: boolean }) {
         <Lightformer form="rect" intensity={2} position={[6, 0, 1]} rotation-y={-Math.PI / 2} scale={[8, 3, 1]} color="#ffd9c4" />
         <Lightformer form="ring" intensity={2.5} position={[0, -3, 4]} scale={5} color="#ffffff" />
       </Environment>
-      <Rig pointer={pointer} scroll={scroll} />
+      <Rig pointer={pointer} scroll={scroll} onReady={onReady} />
     </Canvas>
   );
 }

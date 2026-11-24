@@ -391,15 +391,56 @@ button {
   pointer-events: none;
   z-index: 0;
 }
+/* A cena 3D entra por cima do escudo estático quando fica pronta (classe .is-ready). */
 .hero-3d canvas {
   width: 100% !important;
   height: 100% !important;
-  animation: canvas-in 1.4s var(--ease) both;
+  opacity: 0;
+  transform: scale(0.97);
+  transition:
+    opacity 0.9s var(--ease),
+    transform 1.2s var(--ease);
 }
-@keyframes canvas-in {
+.hero-3d.is-ready canvas {
+  opacity: 1;
+  transform: none;
+}
+.hero-poster {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  transition: opacity 0.7s ease;
+}
+.hero-poster::before {
+  content: '';
+  position: absolute;
+  width: min(46vw, 560px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--accent) 26%, transparent), transparent 68%);
+  filter: blur(30px);
+}
+.hero-poster img {
+  position: relative;
+  width: clamp(200px, 21vw, 330px);
+  height: auto;
+  filter: drop-shadow(0 30px 50px #0009);
+  animation: poster-in 0.8s var(--ease) both;
+}
+@keyframes poster-in {
   from {
     opacity: 0;
     transform: scale(0.94);
+  }
+}
+.hero-3d.is-ready .hero-poster {
+  opacity: 0;
+}
+/* No computador a cena 3D fica à direita do centro (62% da largura); o escudo estático acompanha. */
+@media (min-width: 1041px) {
+  .hero-poster {
+    padding-left: 24%;
   }
 }
 .hero-grid {
