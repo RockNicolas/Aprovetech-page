@@ -2,13 +2,13 @@
 import dynamic from 'next/dynamic';
 import { Component, useEffect, useRef, useState, type ReactNode } from 'react';
 
-// O código da cena 3D (Three.js) é pesado. Começa a baixar assim que este arquivo carrega, sem
-// esperar a página terminar de iniciar, e a cena só é montada depois, quando já está no cache.
-const loadScene = () => import('./Hero3D');
-const Hero3D = dynamic(loadScene, { ssr: false });
-if (typeof window !== 'undefined') void loadScene();
+// Sem { ssr: false } de propósito: assim o Next coloca o código da cena 3D (Three.js, a parte mais
+// pesada do site) na lista de arquivos pré-carregados do próprio HTML, e o navegador o baixa em
+// paralelo com o resto da página, em vez de só começar depois que ela inicia. No servidor o
+// componente não desenha nada (enabled é falso até a página abrir no navegador).
+const Hero3D = dynamic(() => import('./Hero3D'));
 
-// Se o navegador não conseguir criar o contexto WebGL, o site segue só com o escudo estático.
+// Se o navegador não conseguir criar o contexto WebGL, o site segue sem a cena 3D.
 class Safe extends Component<{ children: ReactNode }, { failed: boolean }> {
   state = { failed: false };
   static getDerivedStateFromError() {
@@ -41,15 +41,9 @@ export function Hero3DLoader() {
 
   return (
     <div className={`hero-3d${ready ? ' is-ready' : ''}`} ref={ref} aria-hidden="true">
-      {/* Aparece junto com o HTML. Fica no lugar da cena enquanto ela carrega, e para quem não tem 3D. */}
-      <div className="hero-poster">
-        <img src="/logo.svg" alt="" width={260} height={293} fetchPriority="high" />
-      </div>
-      {enabled && (
-        <Safe>
-          <Hero3D active={visible} onReady={() => setReady(true)} />
-        </Safe>
-      )}
+      <Safe>
+        <Hero3D enabled={enabled} active={visible} onReady={() => setReady(true)} />
+      </Safe>
     </div>
   );
 }

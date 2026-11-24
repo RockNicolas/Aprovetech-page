@@ -64,14 +64,14 @@ function Shield() {
       {/* aro laranja atrás */}
       <mesh position={[0, 0, -depth / 2 - 0.08]} scale={1.045}>
         <extrudeGeometry
-          args={[shape, { depth: 0.22, bevelEnabled: true, bevelThickness: 0.08, bevelSize: 0.07, bevelSegments: 6, curveSegments: 48 }]}
+          args={[shape, { depth: 0.22, bevelEnabled: true, bevelThickness: 0.08, bevelSize: 0.07, bevelSegments: 4, curveSegments: 28 }]}
         />
         {orange}
       </mesh>
       {/* corpo grafite */}
       <mesh position={[0, 0, -depth / 2]}>
         <extrudeGeometry
-          args={[shape, { depth, bevelEnabled: true, bevelThickness: 0.14, bevelSize: 0.1, bevelSegments: 10, curveSegments: 48 }]}
+          args={[shape, { depth, bevelEnabled: true, bevelThickness: 0.14, bevelSize: 0.1, bevelSegments: 4, curveSegments: 28 }]}
         />
         <meshPhysicalMaterial
           color="#2d2d34"
@@ -97,7 +97,7 @@ function Shield() {
         {orange}
       </mesh>
       <mesh position={[...pt(232, 74), front + 0.02]}>
-        <sphereGeometry args={[0.31, 48, 48]} />
+        <sphereGeometry args={[0.31, 32, 32]} />
         <meshPhysicalMaterial color="#ffffff" roughness={0.18} clearcoat={1} emissive="#ffffff" emissiveIntensity={0.12} />
       </mesh>
     </group>
@@ -247,7 +247,7 @@ function Rig({
   );
 }
 
-export default function Hero3D({ active, onReady }: { active: boolean; onReady: () => void }) {
+export default function Hero3D({ enabled, active, onReady }: { enabled: boolean; active: boolean; onReady: () => void }) {
   const pointer = useRef({ x: 0, y: 0 });
   const scroll = useRef(0);
 
@@ -267,6 +267,8 @@ export default function Hero3D({ active, onReady }: { active: boolean; onReady: 
     };
   }, []);
 
+  if (!enabled) return null;
+
   return (
     <Canvas
       dpr={[1, 1.75]}
@@ -278,7 +280,7 @@ export default function Hero3D({ active, onReady }: { active: boolean; onReady: 
       <ambientLight intensity={0.35} />
       <directionalLight position={[4, 5, 6]} intensity={1.6} />
       <pointLight position={[-4, -2, 3]} intensity={18} color="#ff7a3d" />
-      <Environment resolution={256}>
+      <Environment resolution={128}>
         <Lightformer form="rect" intensity={4} position={[0, 5, -4]} scale={[12, 3, 1]} color="#ffffff" />
         <Lightformer form="rect" intensity={3} position={[-6, 1, -1]} rotation-y={Math.PI / 2} scale={[8, 3, 1]} color="#ff7a3d" />
         <Lightformer form="rect" intensity={2} position={[6, 0, 1]} rotation-y={-Math.PI / 2} scale={[8, 3, 1]} color="#ffd9c4" />
