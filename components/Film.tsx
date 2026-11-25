@@ -8,7 +8,7 @@ const CHAPTERS = [
   { at: 0, label: 'O pedido chega', caption: 'O pedido aguarda autorização no sistema ERP.' },
   { at: 5, label: 'O aviso', caption: 'O AproveTech avisa o aprovador no celular.' },
   { at: 9, label: 'A conferência', caption: 'Valor, fornecedor e obra na tela, e a confirmação com biometria.' },
-  { at: 15, label: 'A decisão', caption: 'A decisão volta ao sistema ERP e fica registrada no histórico.' },
+  { at: 15, label: 'A autorização', caption: 'A autorização volta ao sistema ERP e fica registrada no histórico.' },
   { at: 20, label: 'Fim', caption: 'Menos espera. Mais obra.' },
 ];
 

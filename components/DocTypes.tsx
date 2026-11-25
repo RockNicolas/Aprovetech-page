@@ -29,7 +29,7 @@ const DOCS = [
       ['Solicitante', 'Rafael Lima, engenharia'],
       ['Obra', 'Residencial Aurora'],
       ['Itens', 'Vergalhão CA-50, arame e mais 10'],
-      ['Precisa até', '05/12'],
+      ['Data de Necessidade', '05/12'],
     ],
   },
   {

@@ -65,7 +65,7 @@ export function PhoneDemo() {
             </div>
           </div>
           <div className="app-total">
-            <small>Valor aguardando decisão</small>
+            <small>Valor aguardando autorização</small>
             <strong>{money(total)}</strong>
             <span>{pending.length === 1 ? '1 documento' : `${pending.length} documentos`}</span>
           </div>

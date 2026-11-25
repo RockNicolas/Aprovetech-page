@@ -43,12 +43,12 @@ export const safety = [
     text: 'Acima do limite definido pela empresa, ou quando o documento vem sem valor, o app pede uma confirmação a mais com a biometria do celular.',
   },
   {
-    title: 'Reprovação com motivo',
-    text: 'Não dá para reprovar sem escrever o motivo. O solicitante sabe o que corrigir.',
+    title: 'Reprovação com justificativa',
+    text: 'Não é possível reprovar sem justificar o motivo. O solicitante saberá o que corrigir.',
   },
   {
-    title: 'Registro de cada decisão',
-    text: 'Quem decidiu, quando e com quais dados na tela. Ninguém edita esse registro depois.',
+    title: 'Registro de cada autorização',
+    text: 'Quem autorizou, quando e o que foi autorizado. Os registros não são editáveis, garantindo a segurança das informações.',
   },
   {
     title: 'Documento alterado é barrado',
