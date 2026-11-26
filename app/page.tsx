@@ -165,7 +165,7 @@ export default function Page() {
           <div className="wrap hero-grid">
             <div className="hero-copy">
               <h1>
-                <SplitWordsCss text="Aprovações da plataforma ERP," delay={0.1} />
+                <SplitWordsCss text="Aprovações da plataforma ERP" delay={0.1} />
                 <br />
                 <SplitWordsCss text="NO SEU CELULAR!" delay={0.4} accentFrom={0} />
               </h1>
