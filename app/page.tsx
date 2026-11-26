@@ -396,7 +396,9 @@ export default function Page() {
                 return (
                   <Reveal as="li" className="maker" key={m.name} delay={i * 0.1}>
                     <div className="maker-logo" style={{ background: m.bg }}>
-                      {/* Recorta só a logo de dentro da imagem, sem o fundo em volta. */}
+                      {/* Recorta só a logo de dentro da imagem, sem o fundo em volta.
+                          Sem loading="lazy": antes de carregar, a imagem tem altura zero e fica fora
+                          do recorte, e o Safari do iPhone podia nunca baixá-la. */}
                       <span
                         className="crop"
                         style={{ width: Math.round((m.height * cw) / ch), maxWidth: '100%', aspectRatio: `${cw} / ${ch}` }}
@@ -404,7 +406,6 @@ export default function Page() {
                         <img
                           src={m.src}
                           alt={m.name}
-                          loading="lazy"
                           decoding="async"
                           style={{
                             width: `${(m.width / cw) * 100}%`,
