@@ -75,7 +75,7 @@ export const faq = [
   },
   {
     q: 'E se a empresa trabalha com alçadas de aprovação?',
-    a: 'O AproveTech respeita as alçadas: cada pessoa visualiza e decide apenas o que cabe ao seu nível, nas obras às quais tem acesso. A equipe do AproveTech configura isso para cada empresa.',
+    a: 'O AproveTech respeita as alçadas: cada pessoa visualiza e aprova apenas o que cabe ao seu nível, nas obras às quais tem acesso. A equipe do AproveTech configura isso para cada empresa.',
   },
   {
     q: 'Os dados da minha empresa ficam separados dos de outras empresas?',
