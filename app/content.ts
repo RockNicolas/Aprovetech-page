@@ -1,6 +1,15 @@
-// E-mail que recebe os pedidos de demonstração. Defina NEXT_PUBLIC_CONTACT_EMAIL para trocar.
-export const CONTACT_EMAIL = process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'rocksoftwaresolutions.dev@gmail.com';
-export const CONTACT_HREF = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(
+// E-mails que recebem os pedidos de demonstração (NID e Rock). Para trocar, defina
+// NEXT_PUBLIC_CONTACT_EMAIL com os endereços separados por vírgula.
+export const CONTACT_EMAILS = (
+  process.env.NEXT_PUBLIC_CONTACT_EMAIL ||
+  'contato@nidconsultoria.com.br,rocksoftwaresolutions.dev@gmail.com'
+)
+  .split(',')
+  .map((email) => email.trim())
+  .filter(Boolean);
+// Destinatários no formato do link mailto.
+export const CONTACT_TO = CONTACT_EMAILS.join(',');
+export const CONTACT_HREF = `mailto:${CONTACT_TO}?subject=${encodeURIComponent(
   'Quero uma demonstração do AproveTech',
 )}`;
 

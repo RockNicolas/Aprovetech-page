@@ -52,4 +52,7 @@ Firefox e Safari de 2023 em diante); a cena 3D do topo some sozinha se o aparelh
 - Textos, perguntas, empresas responsáveis e dados da demonstração: `app/content.ts`
 - Logos das empresas responsáveis: `public/responsaveis/`
 - Estilos e cores: `app/styles.css` (tokens no topo)
-- E-mail dos botões "Pedir demonstração": variável `NEXT_PUBLIC_CONTACT_EMAIL` (veja `.env.example`)
+- E-mails de contato mostrados no site: variável `NEXT_PUBLIC_CONTACT_EMAIL`, separados por vírgula
+- Envio do formulário "Pedir demonstração": variáveis `SMTP_*` e `DEMO_EMAIL_TO` (veja `.env.example`).
+  Copie para `.env` no computador e cadastre as mesmas na hospedagem. Sem elas, o formulário oferece o
+  programa de e-mail do visitante. O modelo do e-mail está em `lib/demo-email.ts`.

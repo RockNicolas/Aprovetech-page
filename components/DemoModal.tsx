@@ -1,10 +1,10 @@
 'use client';
 import { useEffect, useRef, useState, type FormEvent } from 'react';
-import { CONTACT_EMAIL } from '../app/content';
+import { CONTACT_EMAILS, CONTACT_TO } from '../app/content';
 
 // Qualquer link com data-demo abre esta janela. Sem JavaScript, o link segue como mailto normal.
-// O site é estático e não tem servidor de e-mail: ao enviar, o formulário abre o programa de e-mail
-// do visitante com a mensagem pronta, endereçada a CONTACT_EMAIL.
+// O envio é feito por /api/demonstracao. Se falhar, a janela oferece o programa de e-mail do
+// visitante com a mensagem pronta, para o pedido não se perder.
 
 // (85) 91234-5678
 function maskPhone(v: string) {
@@ -18,14 +18,15 @@ function maskPhone(v: string) {
 export function DemoModal() {
   const ref = useRef<HTMLDialogElement>(null);
   const [phone, setPhone] = useState('');
-  const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState<'form' | 'sending' | 'sent' | 'failed'>('form');
+  const [fallback, setFallback] = useState('');
 
   useEffect(() => {
     const open = (e: MouseEvent) => {
       const a = (e.target as Element | null)?.closest?.('a[data-demo]');
       if (!a || e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
       e.preventDefault();
-      setSent(false);
+      setStatus((s) => (s === 'sending' ? s : 'form'));
       ref.current?.showModal();
     };
     document.addEventListener('click', open);
@@ -34,7 +35,7 @@ export function DemoModal() {
 
   const close = () => ref.current?.close();
 
-  function onSubmit(e: FormEvent<HTMLFormElement>) {
+  async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const f = new FormData(e.currentTarget);
     const get = (k: string) => String(f.get(k) ?? '').trim();
@@ -47,11 +48,23 @@ export function DemoModal() {
       `Telefone: ${get('telefone') || 'não informado'}`,
     ];
     if (get('mensagem')) lines.push('', 'Como as aprovações funcionam hoje:', get('mensagem'));
-    const href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(
+    const href = `mailto:${CONTACT_TO}?subject=${encodeURIComponent(
       `Quero uma demonstração do AproveTech · ${get('empresa')}`,
     )}&body=${encodeURIComponent(lines.join('\n'))}`;
-    setSent(true);
-    window.location.href = href;
+    setFallback(href);
+    setStatus('sending');
+    try {
+      const res = await fetch('/api/demonstracao', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(Object.fromEntries(f)),
+      });
+      if (!res.ok) throw new Error(String(res.status));
+      setPhone('');
+      setStatus('sent');
+    } catch {
+      setStatus('failed');
+    }
   }
 
   return (
@@ -71,32 +84,37 @@ export function DemoModal() {
           </svg>
         </button>
 
-        {sent ? (
-          <div className="modal-done">
-            <h2 id="demo-title">Falta só enviar</h2>
-            <p>
-              Abrimos o seu programa de e-mail com a mensagem pronta, endereçada a{' '}
-              <strong>{CONTACT_EMAIL}</strong>. Confira e clique em enviar.
-            </p>
-            <p className="modal-hint">
-              Não abriu? Escreva direto para{' '}
-              <a className="text-link" href={`mailto:${CONTACT_EMAIL}`}>
-                {CONTACT_EMAIL}
-              </a>
-              .
-            </p>
+        {status === 'sent' ? (
+          <div className="modal-done" role="status">
+            <h2 id="demo-title">Pedido enviado</h2>
+            <p>Recebemos os seus dados. Vamos responder no e-mail que você informou.</p>
             <div className="modal-actions">
               <button type="button" className="btn" onClick={close}>
                 Fechar
               </button>
             </div>
           </div>
+        ) : status === 'failed' ? (
+          <div className="modal-done" role="alert">
+            <h2 id="demo-title">Não conseguimos enviar</h2>
+            <p>
+              Envie pelo seu programa de e-mail: a mensagem já vai preenchida. Ou escreva para{' '}
+              <strong>{CONTACT_EMAILS.join(' e ')}</strong>.
+            </p>
+            <div className="modal-actions">
+              <button type="button" className="btn btn-ghost" onClick={close}>
+                Fechar
+              </button>
+              <a className="btn" href={fallback}>
+                Abrir meu e-mail
+              </a>
+            </div>
+          </div>
         ) : (
           <form onSubmit={onSubmit}>
             <h2 id="demo-title">Pedir demonstração</h2>
             <p className="modal-lead">
-              Preencha os dados e mostramos o AproveTech com o fluxo da sua empresa. A mensagem vai
-              para <strong>{CONTACT_EMAIL}</strong>.
+              Preencha os dados e mostramos o AproveTech com o fluxo da sua empresa.
             </p>
 
             <div className="field">
@@ -135,18 +153,25 @@ export function DemoModal() {
               <textarea id="d-msg" name="mensagem" rows={3} />
             </div>
 
+            {/* Armadilha para robôs: fica fora da tela e uma pessoa não preenche. */}
+            <input
+              name="site"
+              type="text"
+              tabIndex={-1}
+              autoComplete="off"
+              aria-hidden="true"
+              style={{ position: 'absolute', left: '-9999px' }}
+            />
+
             <div className="modal-actions">
               <button type="button" className="btn btn-ghost" onClick={close}>
                 Cancelar
               </button>
-              <button type="submit" className="btn">
-                Enviar pedido
+              <button type="submit" className="btn" disabled={status === 'sending'}>
+                {status === 'sending' ? 'Enviando…' : 'Enviar pedido'}
               </button>
             </div>
-            <p className="modal-hint">
-              Ao enviar, abrimos o seu programa de e-mail com a mensagem pronta. Nada é enviado sem
-              a sua confirmação.
-            </p>
+            <p className="modal-hint">Vamos responder no e-mail que você informar.</p>
           </form>
         )}
       </div>

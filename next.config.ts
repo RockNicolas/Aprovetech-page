@@ -26,6 +26,10 @@ const config: NextConfig = {
   distDir: process.env.NEXT_BUILD_DIR || '.next',
   devIndicators: false,
   poweredByHeader: false,
+  // O e-mail de demonstração anexa o ícone; garante que o arquivo vá junto na publicação.
+  outputFileTracingIncludes: {
+    '/api/demonstracao': ['./public/apple-touch-icon.png'],
+  },
   async headers() {
     return [{ source: '/:path*', headers: security }];
   },
