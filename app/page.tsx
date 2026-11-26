@@ -164,9 +164,6 @@ export default function Page() {
           <Hero3DLoader />
           <div className="wrap hero-grid">
             <div className="hero-copy">
-              <p className="pill fade-up" style={{ animationDelay: '0s' }}>
-                <i /> Aprovações do seu sistema ERP, no celular
-              </p>
               <h1>
                 <SplitWordsCss text="Aprovações da plataforma ERP," delay={0.1} />
                 <br />

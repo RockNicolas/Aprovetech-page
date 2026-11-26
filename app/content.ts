@@ -56,7 +56,7 @@ export const safety = [
   },
   {
     title: 'Cada usuário cuida dos seus dados',
-    text: 'Dá para exportar os próprios dados, ver as sessões abertas e pedir a exclusão da conta.',
+    text: 'É possível exportar os próprios dados, ver as sessões abertas e pedir a exclusão da conta.',
   },
 ];
 

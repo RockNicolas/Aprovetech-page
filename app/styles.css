@@ -458,33 +458,6 @@ button {
 .try-list strong {
   color: var(--text);
 }
-.pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 7px 16px 7px 12px;
-  border-radius: 99px;
-  border: 1px solid var(--line);
-  background: color-mix(in srgb, var(--surface) 70%, transparent);
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  text-wrap: balance;
-  color: var(--muted);
-  margin-bottom: 26px;
-}
-.pill i {
-  flex: none;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 0 0 var(--accent);
-  animation: ping 2s ease-out infinite;
-}
 @keyframes ping {
   to {
     box-shadow: 0 0 0 10px transparent;
@@ -2473,8 +2446,6 @@ h3 {
   .btn-glow {
     animation: none;
   }
-  .pill i,
-  .pill,
   .btn-ghost,
   .nav.scrolled,
   .film-end {
