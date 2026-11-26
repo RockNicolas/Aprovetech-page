@@ -111,7 +111,7 @@ export const makers = [
     ],
   },
   {
-    name: 'NID Consultoria',
+    name: 'NID Tecnologia',
     src: '/responsaveis/nid-logo.jpg',
     width: 750,
     crop: [43, 171, 675, 196],
@@ -119,7 +119,7 @@ export const makers = [
     bg: '#ffffff',
     instagram: 'nidconsultoria',
     site: 'https://www.nidconsultoria.com.br/',
-    text: 'Administra a NID Tecnologia e faz consultoria em processos para a construção civil, com implantação e treinamento de sistema ERP e acompanhamento das equipes.',
+    text: 'A NID Tecnologia é uma empresa do Grupo NID, que conta com a NID Consultoria, empresa especializada em consultoria de processos para construção civil, com implantação, treinamento e capacitação da plataforma ERP SIENGE.',
     facts: [
       ['Desde 2016', 'em atividade'],
       ['15+ anos', 'da equipe na construção civil'],

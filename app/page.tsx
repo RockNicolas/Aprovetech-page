@@ -168,12 +168,12 @@ export default function Page() {
                 <i /> Aprovações do seu sistema ERP, no celular
               </p>
               <h1>
-                <SplitWordsCss text="Aprovou no celular." delay={0.1} />
+                <SplitWordsCss text="Aprovações da plataforma ERP," delay={0.1} />
                 <br />
-                <SplitWordsCss text="A obra não parou." delay={0.35} accentFrom={0} />
+                <SplitWordsCss text="NO SEU CELULAR!" delay={0.4} accentFrom={0} />
               </h1>
               <p className="lead fade-up" style={{ animationDelay: '0.7s' }}>
-                Pedidos, solicitações, cotações, contratos e medições do sistema ERP na palma da mão, com
+                Pedidos, solicitações, cotações, contratos e medições da plataforma ERP na palma da mão, com
                 valor, fornecedor e obra na tela antes de qualquer toque.
               </p>
               <div className="hero-cta fade-up" style={{ animationDelay: '0.85s' }}>
@@ -328,7 +328,7 @@ export default function Page() {
                 <p className="eyebrow">Segurança</p>
               </Reveal>
               <h2>
-                <Title text="Aprovação enviada ao ERP não se desfaz." accentFrom={4} />
+                <Title text="Aprovação enviada à plataforma ERP NÃO SE DESFAZ!" accentFrom={5} />
               </h2>
               <Reveal delay={0.15}>
                 <p className="section-sub">
@@ -500,7 +500,7 @@ export default function Page() {
           </ul>
           <p>
             © {new Date().getFullYear()} AproveTech, um produto da Rock Software Solutions e da NID
-            Consultoria. O AproveTech se integra a sistemas ERP por API. Marcas de terceiros
+            Tecnologia. O AproveTech se integra a sistemas ERP por API. Marcas de terceiros
             pertencem aos seus respectivos titulares.
           </p>
         </div>

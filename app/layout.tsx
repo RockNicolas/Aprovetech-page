@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     ? { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION }
     : undefined,
   openGraph: {
-    title: 'AproveTech · Aprovou no celular. A obra não parou.',
+    title: 'AproveTech · Aprovações da plataforma ERP, NO SEU CELULAR!',
     description: 'Aprovações do seu sistema ERP no celular: menos espera, mais obra.',
     type: 'website',
     locale: 'pt_BR',
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'AproveTech · Aprovou no celular. A obra não parou.',
+    title: 'AproveTech · Aprovações da plataforma ERP,  NO SEU CELULAR!',
     description: 'Aprovações do seu sistema ERP no celular: menos espera, mais obra.',
   },
   icons: {
@@ -63,8 +63,8 @@ export const viewport: Viewport = {
   themeColor: '#1e1e22',
 };
 
-// Roda antes da primeira pintura para o tema salvo não piscar.
-const themeScript = `(function(){var r=document.documentElement;r.classList.add('js');var t='dark';try{var s=localStorage.getItem('aprovetech-theme');if(s==='light'||s==='dark')t=s;else if(window.matchMedia('(prefers-color-scheme: light)').matches)t='light'}catch(e){}r.setAttribute('data-theme',t)})();`;
+// Roda antes da primeira pintura: as animações de entrada só valem quando há JavaScript.
+const jsScript = `document.documentElement.classList.add('js')`;
 
 // Dados estruturados (schema.org): ajudam o Google a entender o que é o produto e quem o faz.
 const jsonLd = {
@@ -94,9 +94,9 @@ const jsonLd = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="pt-BR" data-theme="dark" suppressHydrationWarning>
+    <html lang="pt-BR" suppressHydrationWarning>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        <script dangerouslySetInnerHTML={{ __html: jsScript }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       </head>
       <body className={inter.variable}>

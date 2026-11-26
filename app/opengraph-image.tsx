@@ -31,8 +31,9 @@ export default function Image() {
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', fontSize: 96, fontWeight: 800, lineHeight: 1.02, letterSpacing: -4 }}>
-          <div style={{ display: 'flex' }}>Aprovou no celular.</div>
-          <div style={{ display: 'flex', color: '#ff8c51' }}>A obra não parou.</div>
+          <div style={{ display: 'flex' }}>Aprovações da</div>
+          <div style={{ display: 'flex' }}>plataforma ERP,</div>
+          <div style={{ display: 'flex', color: '#ff8c51' }}>NO SEU CELULAR!</div>
         </div>
 
         <div style={{ display: 'flex', fontSize: 30, color: '#b1b0b7' }}>

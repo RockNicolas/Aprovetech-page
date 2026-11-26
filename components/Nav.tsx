@@ -1,6 +1,5 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { ThemeToggle } from './ThemeToggle';
 import { Magnetic } from './Magnetic';
 
 export function Nav({ links, contactHref }: { links: { href: string; label: string }[]; contactHref: string }) {
@@ -28,7 +27,6 @@ export function Nav({ links, contactHref }: { links: { href: string; label: stri
           ))}
         </nav>
         <div className="nav-actions">
-          <ThemeToggle />
           <Magnetic strength={0.2}>
             <a className="btn btn-sm" href={contactHref} data-demo>
               <span className="lbl-long">Pedir demonstração</span>

@@ -21,23 +21,6 @@
   color-scheme: dark;
   font-synthesis: none;
 }
-:root[data-theme='light'] {
-  --bg: #faf8f5;
-  --bg-2: #f3efe9;
-  --surface: #ffffff;
-  --surface-2: #f3efe9;
-  --text: #242839;
-  --muted: #5f6678;
-  --line: #e4ddd5;
-  --accent-text: #b7450a;
-  --accent-soft: #fff0e6;
-  --amber: #986013;
-  --amber-soft: #fff4dc;
-  --green: #167455;
-  --green-soft: #e8f6f0;
-  --shadow: 0 40px 100px #24283926;
-  color-scheme: light;
-}
 
 /* ===== Base ===== */
 * {
@@ -160,6 +143,9 @@ button {
   vertical-align: top;
   padding-bottom: 0.12em;
   margin-bottom: -0.12em;
+  /* O espaçamento negativo das letras encolhe a caixa e cortava a última letra. */
+  padding-right: 0.06em;
+  margin-right: -0.06em;
 }
 .word {
   display: inline-block;
@@ -242,19 +228,6 @@ button {
   display: flex;
   align-items: center;
   gap: 10px;
-}
-.icon-btn {
-  width: 40px;
-  height: 40px;
-  border-radius: 12px;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  display: grid;
-  place-items: center;
-  transition: border-color 0.2s;
-}
-.icon-btn:hover {
-  border-color: var(--accent);
 }
 .lbl-short {
   display: none;
@@ -497,10 +470,14 @@ button {
   backdrop-filter: blur(8px);
   font-size: 13px;
   font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-wrap: balance;
   color: var(--muted);
   margin-bottom: 26px;
 }
 .pill i {
+  flex: none;
   width: 8px;
   height: 8px;
   border-radius: 50%;
@@ -518,6 +495,12 @@ h1 {
   line-height: 1.02;
   letter-spacing: -0.045em;
   font-weight: 800;
+}
+/* Em duas colunas, o título do topo é um pouco menor para caber em três linhas. */
+@media (min-width: 1041px) {
+  .hero h1 {
+    font-size: clamp(46px, 4.6vw, 64px);
+  }
 }
 .lead {
   margin-top: 26px;
@@ -2381,10 +2364,6 @@ h3 {
   }
   .nav-actions {
     gap: 6px;
-  }
-  .icon-btn {
-    width: 36px;
-    height: 36px;
   }
   .nav-actions .btn-sm {
     padding: 0 9px;
