@@ -7,6 +7,13 @@ const money = (cents: number) => brl.format(cents / 100);
 
 type Phase = 'idle' | 'sending' | 'done' | 'leaving';
 
+// Arquivo fictício de cada tipo de documento, para a demonstração dos anexos.
+const attachmentName: Record<string, string> = {
+  Pedido: 'Proposta do fornecedor.pdf',
+  Medição: 'Boletim de medição.pdf',
+  Contrato: 'Minuta do contrato.pdf',
+};
+
 // Demonstração do aplicativo com dados fictícios: nada aqui fala com o sistema ERP.
 export function PhoneDemo() {
   const [pending, setPending] = useState<DemoDoc[]>(demoDocs);
@@ -14,6 +21,9 @@ export function PhoneDemo() {
   const [active, setActive] = useState<{ id: number; phase: Phase } | null>(null);
   const timers = useRef<number[]>([]);
   const confirmRef = useRef<HTMLButtonElement>(null);
+  const [files, setFiles] = useState<DemoDoc | null>(null);
+  const [view, setView] = useState<'list' | 'open' | 'download'>('list');
+  const closeFilesRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const list = timers.current;
@@ -25,13 +35,19 @@ export function PhoneDemo() {
   }, [selected]);
 
   useEffect(() => {
-    if (!selected) return;
+    if (files) closeFilesRef.current?.focus({ preventScroll: true });
+  }, [files]);
+
+  useEffect(() => {
+    if (!selected && !files) return;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setSelected(null);
+      if (e.key !== 'Escape') return;
+      setSelected(null);
+      setFiles(null);
     };
     document.addEventListener('keydown', onKey);
     return () => document.removeEventListener('keydown', onKey);
-  }, [selected]);
+  }, [selected, files]);
 
   const later = (fn: () => void, ms: number) => {
     timers.current.push(window.setTimeout(fn, ms));
@@ -93,18 +109,38 @@ export function PhoneDemo() {
                     </div>
                     <span className="doc-value">{money(d.cents)}</span>
                   </div>
-                  <button
-                    type="button"
-                    className="mini"
-                    disabled={phase !== 'idle' || active !== null}
-                    onClick={() => setSelected(d)}
-                  >
-                    {phase === 'sending'
-                      ? 'Enviando…'
-                      : phase === 'idle'
-                        ? 'Aprovar'
-                        : 'Aprovado ✓'}
-                  </button>
+                  <div className="doc-actions">
+                    <button
+                      type="button"
+                      className="mini mini-ghost"
+                      disabled={phase !== 'idle'}
+                      onClick={() => {
+                        setSelected(null);
+                        setView('list');
+                        setFiles(d);
+                      }}
+                    >
+                      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <path d="m21 11-8.6 8.6a5.5 5.5 0 0 1-7.8-7.8l9-9a3.7 3.7 0 0 1 5.2 5.2l-9 9a1.8 1.8 0 0 1-2.6-2.6L15.5 6" />
+                      </svg>
+                      Anexo
+                    </button>
+                    <button
+                      type="button"
+                      className="mini"
+                      disabled={phase !== 'idle' || active !== null}
+                      onClick={() => {
+                        setFiles(null);
+                        setSelected(d);
+                      }}
+                    >
+                      {phase === 'sending'
+                        ? 'Enviando…'
+                        : phase === 'idle'
+                          ? 'Aprovar'
+                          : 'Aprovado ✓'}
+                    </button>
+                  </div>
                 </li>
               );
             })}
@@ -115,6 +151,48 @@ export function PhoneDemo() {
               <p>Tudo em dia. Nenhuma pendência na sua alçada.</p>
               <button type="button" className="link-btn" onClick={() => setPending(demoDocs)}>
                 Recomeçar demonstração
+              </button>
+            </div>
+          )}
+          {files && (
+            <div className="sheet" role="dialog" aria-labelledby="files-title">
+              <small className="sheet-eyebrow">ANEXOS</small>
+              <h3 id="files-title">
+                {files.type} {files.num}
+              </h3>
+              <div className="att">
+                <b>{attachmentName[files.type]}</b>
+                <small>{files.supplier}</small>
+              </div>
+              {view === 'open' && (
+                <div className="att-page" role="img" aria-label="Prévia de exemplo do anexo">
+                  <i />
+                  <i />
+                  <i />
+                  <i />
+                  <span>Exemplo fictício</span>
+                </div>
+              )}
+              {view === 'download' && (
+                <p className="att-note" role="status">
+                  No aplicativo, o arquivo é salvo no celular. Aqui nada é baixado.
+                </p>
+              )}
+              <div className="att-actions">
+                <button type="button" className="mini mini-ghost" onClick={() => setView('open')}>
+                  Abrir
+                </button>
+                <button type="button" className="mini" onClick={() => setView('download')}>
+                  Baixar
+                </button>
+              </div>
+              <button
+                type="button"
+                className="link-btn"
+                ref={closeFilesRef}
+                onClick={() => setFiles(null)}
+              >
+                Fechar
               </button>
             </div>
           )}
@@ -151,7 +229,7 @@ export function PhoneDemo() {
         </div>
       </div>
       <p className="demo-note">
-        Toque em <strong>Aprovar</strong> e experimente. Dados fictícios.
+        Toque em <strong>Anexo</strong> ou <strong>Aprovar</strong> e experimente. Dados fictícios.
       </p>
     </div>
   );

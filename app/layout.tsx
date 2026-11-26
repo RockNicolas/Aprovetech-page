@@ -21,6 +21,7 @@ export const metadata: Metadata = {
     'aprovação de contratos',
     'construção civil',
     'Sienge',
+    'aplicativo de aprovação Sienge',
   ],
   authors: [
     { name: 'Rock Software Solutions', url: 'https://rock-software-solutions.vercel.app/' },

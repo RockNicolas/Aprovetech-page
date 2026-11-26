@@ -170,7 +170,7 @@ export default function Page() {
                 <SplitWordsCss text="NO SEU CELULAR!" delay={0.4} accentFrom={0} />
               </h1>
               <p className="lead fade-up" style={{ animationDelay: '0.7s' }}>
-                Pedidos, solicitações, cotações, contratos e medições da plataforma ERP na palma da mão, com
+                Pedidos, solicitações, cotações, contratos e medições do ERP Sienge na palma da mão, com
                 valor, fornecedor e obra na tela antes de qualquer toque.
               </p>
               <div className="hero-cta fade-up" style={{ animationDelay: '0.85s' }}>
@@ -263,22 +263,29 @@ export default function Page() {
               <Reveal delay={0.15}>
                 <p className="section-sub">
                   Aprove um dos documentos fictícios ao lado e veja o resumo, o envio e o total
-                  mudarem, do mesmo jeito que no aplicativo.
+                  mudarem, do mesmo jeito que no aplicativo. Antes de aprovar, dá para abrir e baixar o
+                  anexo do documento.
                 </p>
               </Reveal>
               <ol className="try-list">
                 <Reveal as="li" kind="rule" delay={0.1}>
                   <b>1</b>
                   <span>
-                    Toque em <strong>Aprovar</strong> em qualquer documento
+                    Toque em <strong>Anexo</strong> para ver o arquivo do documento
                   </span>
                 </Reveal>
                 <Reveal as="li" kind="rule" delay={0.2}>
                   <b>2</b>
-                  <span>Confira fornecedor, obra e valor no resumo</span>
+                  <span>
+                    Toque em <strong>Aprovar</strong> em qualquer documento
+                  </span>
                 </Reveal>
                 <Reveal as="li" kind="rule" delay={0.3}>
                   <b>3</b>
+                  <span>Confira fornecedor, obra e valor no resumo</span>
+                </Reveal>
+                <Reveal as="li" kind="rule" delay={0.4}>
+                  <b>4</b>
                   <span>Confirme e acompanhe o envio até o fim</span>
                 </Reveal>
               </ol>
@@ -498,8 +505,8 @@ export default function Page() {
           </ul>
           <p>
             © {new Date().getFullYear()} AproveTech, um produto da Rock Software Solutions e da NID
-            Tecnologia. O AproveTech se integra a sistemas ERP por API. Marcas de terceiros
-            pertencem aos seus respectivos titulares.
+            Tecnologia. O AproveTech se integra ao ERP Sienge por API. Sienge e as demais marcas de
+            terceiros pertencem aos seus respectivos titulares.
           </p>
         </div>
       </footer>

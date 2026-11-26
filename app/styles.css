@@ -723,8 +723,16 @@ h1 {
   border: 1px solid var(--line);
   color: var(--text);
 }
-.doc .mini {
-  width: 100%;
+.doc-actions {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 8px;
+}
+.doc-actions .mini {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
 }
 .app-empty {
   display: grid;
@@ -811,6 +819,48 @@ h1 {
 .sheet-actions {
   display: grid;
   grid-template-columns: 1fr 1.4fr;
+  gap: 8px;
+}
+/* Anexos da demonstração */
+.att {
+  display: grid;
+  gap: 2px;
+  background: var(--bg-2);
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-size: 13px;
+}
+.att small,
+.att-note {
+  color: var(--muted);
+  font-size: 12px;
+}
+.att-page {
+  display: grid;
+  gap: 8px;
+  background: #fff;
+  border-radius: 10px;
+  padding: 14px;
+}
+.att-page i {
+  height: 7px;
+  border-radius: 99px;
+  background: #d9d7d2;
+}
+.att-page i:first-child {
+  width: 55%;
+  background: #9d9aa3;
+}
+.att-page i:nth-child(4) {
+  width: 70%;
+}
+.att-page span {
+  color: #6b6a70;
+  font-size: 11px;
+}
+.att-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 8px;
 }
 

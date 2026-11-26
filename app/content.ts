@@ -17,9 +17,9 @@ export const CONTACT_HREF = `mailto:${CONTACT_TO}?subject=${encodeURIComponent(
 // compartilhamento. Defina NEXT_PUBLIC_SITE_URL com o domínio real ao publicar.
 export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3002').replace(/\/+$/, '');
 
-export const SITE_TITLE = 'AproveTech · Aprovações do seu ERP no celular';
+export const SITE_TITLE = 'AproveTech · Aplicativo de aprovações para o ERP Sienge';
 export const SITE_DESCRIPTION =
-  'Aprove pedidos, solicitações, cotações, contratos e medições do seu sistema ERP pelo celular, com confirmação segura, alçadas respeitadas e histórico de cada decisão.';
+  'Aplicativo para aprovações no ERP Sienge: aprove pedidos, solicitações, cotações, contratos e medições pelo celular, com alçadas respeitadas e histórico.';
 
 export const navLinks = [
   { href: '#como-funciona', label: 'Como funciona' },
@@ -70,6 +70,14 @@ export const safety = [
 ];
 
 export const faq = [
+  {
+    q: 'O AproveTech funciona com o Sienge?',
+    a: 'Sim. O AproveTech é um aplicativo de aprovações que se conecta ao ERP Sienge pela API. Pedidos, solicitações, cotações, contratos e medições chegam ao celular de quem aprova.',
+  },
+  {
+    q: 'Consigo ver o anexo antes de aprovar?',
+    a: 'Sim. Os arquivos anexados ao documento no Sienge podem ser abertos ou baixados pelo aplicativo, antes de aprovar ou reprovar.',
+  },
   {
     q: 'Preciso alterar alguma configuração no meu sistema ERP?',
     a: 'Não. O AproveTech se conecta ao sistema ERP pela API oficial, com um usuário de API da empresa. Quem já cadastra e envia documentos continua trabalhando da mesma forma.',

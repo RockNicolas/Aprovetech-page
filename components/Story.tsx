@@ -12,7 +12,7 @@ const STEPS = [
   },
   {
     title: 'A pessoa confere',
-    text: 'Valor, fornecedor, obra, prazo, solicitante e itens aparecem na mesma tela. Sem abrir anexo, sem planilha.',
+    text: 'Valor, fornecedor, obra, prazo, solicitante e itens aparecem na mesma tela, e os anexos do documento abrem com um toque.',
   },
   {
     title: 'Aprova ou reprova',
